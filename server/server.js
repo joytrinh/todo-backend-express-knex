@@ -1,16 +1,30 @@
 const app = require('./server-config.js');
-const routes = require('./server-routes.js');
+const todoRoutes = require('./routes/todo-routes.js');
+const userRoutes = require('./routes/user-routes.js');
+const taskRoutes = require('./routes/task-routes.js');
 
 const port = process.env.PORT || 5000;
 
-app.get('/', routes.getAllTodos);
-app.get('/:id', routes.getTodo);
+// USER routes
+app.get('/users', userRoutes.getAll);
+app.get('/users/:id', userRoutes.get);
+app.post('/users', userRoutes.post);
+app.patch('/users/:id', userRoutes.patch);
+app.delete('/:id', userRoutes.del);
 
-app.post('/', routes.postTodo);
-app.patch('/:id', routes.patchTodo);
+// TASK routes
+app.post('/tasks', taskRoutes.post);
+app.delete('/tasks', taskRoutes.del);
 
-app.delete('/', routes.deleteAllTodos);
-app.delete('/:id', routes.deleteTodo);
+// TODO routes
+app.get('/', todoRoutes.getAllTodos);
+app.get('/:id', todoRoutes.getTodo);
+
+app.post('/', todoRoutes.postTodo);
+app.patch('/:id', todoRoutes.patchTodo);
+
+app.delete('/', todoRoutes.deleteAllTodos);
+app.delete('/:id', todoRoutes.deleteTodo);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(port, () => console.log(`Listening on port ${port}`));
