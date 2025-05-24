@@ -10,11 +10,11 @@ async function create(user_id, todo_id) {
     }
 
     try {
-        const task = await knex('tasks').insert({ user_id, todo_id }).returning('*');
+        const [task] = await knex('tasks').insert({ user_id, todo_id }).returning('*');
         return {
             statusCode: 201,
             message: 'task created successfully',
-            data: task[0]
+            data: task
         }
     } catch (error) {
         if(error.code === '23505') {
@@ -36,7 +36,7 @@ async function create(user_id, todo_id) {
 // delete is a reserved keyword
 async function del(user_id, todo_id) {
     try {
-        const [task] = await knex('tasks').where({ user_id, todo_id }).delete().returning('*');
+        const [task] = await knex('tasks').where({ user_id, todo_id }).del().returning('*');
         if(!task) {
             return {
                 statusCode: 404,
@@ -65,6 +65,6 @@ async function clear() {
 
 module.exports = {
     create,
-    delete: del,
+    del,
     clear
 }

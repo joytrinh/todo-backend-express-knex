@@ -2,7 +2,7 @@ const knex = require("./connection.js");
 
 async function all() {
     try {
-        const users = knex('users');
+        const users = await knex('users');
         return {
             statusCode: 200,
             message: 'Users retrieved successfully',
@@ -104,7 +104,8 @@ async function update({id, name, email}) {
 // delete is a reserved keyword
 async function del(id) {
     try {
-        const [user] = await knex('users').where({ id }).delete().returning('*');
+        const [user] = await knex('users').where({ id }).del().returning('*');
+        
         if(!user) {
             return {
                 statusCode: 404,
@@ -136,6 +137,6 @@ module.exports = {
     get,
     create,
     update,
-    delete: del,
+    del,
     clear
 }

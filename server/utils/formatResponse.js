@@ -1,6 +1,5 @@
 const formatResponse = (res, {statusCode, message, data}) => {
     const response = {
-        status: statusCode,
         message: message,
     };
     

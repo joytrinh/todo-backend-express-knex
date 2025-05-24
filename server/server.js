@@ -10,7 +10,7 @@ app.get('/users', userRoutes.getAll);
 app.get('/users/:id', userRoutes.get);
 app.post('/users', userRoutes.post);
 app.patch('/users/:id', userRoutes.patch);
-app.delete('/:id', userRoutes.del);
+app.delete('/users/:id', userRoutes.del);
 
 // TASK routes
 app.post('/tasks', taskRoutes.post);
